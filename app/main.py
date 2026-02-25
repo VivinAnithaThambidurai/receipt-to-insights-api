@@ -1,7 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
 
 app = FastAPI()
 
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
+
+@app.post("/receipts/upload")
+async def upload_receipt(file: UploadFile = File(...)):
+    return {
+        "filename": file.filename,
+        "content_type": file.content_type,
+    }
